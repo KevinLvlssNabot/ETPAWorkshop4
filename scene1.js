@@ -81,9 +81,8 @@ update(){
   	this.scene.start("deuxieme_scene");
     this.player.setVelocityX(0);
   }
-//  if (this.space.isDown) {
-//		this.scene.start("deuxieme_scene", {test: this.ciel});
-//  }
+
+
 }
 
 }

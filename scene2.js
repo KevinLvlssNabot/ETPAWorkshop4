@@ -4,6 +4,7 @@ class Scene2 extends Phaser.Scene {
   }
 
   init(data){
+    this.vieBarre = 2
   }
 
   preload(){
@@ -12,7 +13,7 @@ class Scene2 extends Phaser.Scene {
     this.load.image('platform_tft','assets/platform_tft.png');
     this.load.image('platform_tfth','assets/platform_tfth.png');
     this.load.image('pplatform_tft','assets/pplatform_tft.png');
-    this.load.image('pplatform_tft_brisé','assets/pplatform_tft_brisé.png');
+    this.load.image('manette_Atari','assets/manette_Atari.png');
     this.load.spritesheet('yunah','assets/yunah.png',{frameWidth: 132, frameHeight: 160});
 
   }
@@ -26,8 +27,14 @@ class Scene2 extends Phaser.Scene {
     this.platforms.create(515,560,'platform_tfth');
 
     this.destroyable = this.physics.add.staticGroup();
-    this.destroyable.create(750,100,'pplatform_tft_brisé');
     this.destroyable.create(750,100,'pplatform_tft');
+
+    this.manette = this.physics.add.group();
+    this.manette.create(750,75,'manette_Atari');
+    this.physics.add.collider(this.manette,this.platforms);
+    this.physics.add.collider(this.manette,this.destroyable);
+
+
 
     this.balle = this.physics.add.sprite(300,300,'balle');
     this.balle.setCollideWorldBounds(true);
@@ -37,12 +44,14 @@ class Scene2 extends Phaser.Scene {
     this.physics.add.collider(this.balle,this.destroyable, destroyPlatforms, null, this);
 
 
-    this.player = this.physics.add.sprite(170,538,'yunah').setSize(90,155);
+    this.player = this.physics.add.sprite(170,538,'yunah_TFT').setSize(90,155);
     this.player.setCollideWorldBounds(true);
     this.player.setBounce(0);
     this.player.body.setGravityY(100);
     this.physics.add.collider(this.player,this.platforms);
     this.physics.add.collider(this.balle, this.player, hitBalle, null, this);
+    this.physics.add.overlap(this.manette, this.player, takeManetteAtari, null, this);
+
 
     this.cursors = this.input.keyboard.createCursorKeys();
     this.ctrl = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.CTRL);
@@ -83,13 +92,24 @@ class Scene2 extends Phaser.Scene {
   		this.player.anims.play('idle', true);
   	}
 
+
+
     function hitBalle(balle, player){
       this.balle.setVelocityY(-600);
     }
 
     function destroyPlatforms(balle, destroyable){
-    	this.destroyable.destroy();
+      this.vieBarre = this.vieBarre -1;
+        if (this.vieBarre == 0) {
+            this.destroyable.destroy();
+        }
     }
+
+    function takeManetteAtari(player, manette){
+    	 this.scene.start("troisième_scène");
+       this.player.setVelocityX(0);
+    	}
+
   }
 
 
