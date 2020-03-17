@@ -3,7 +3,8 @@ class Scene1 extends Phaser.Scene {
     super("premiere_scene")
   }
 
-
+init(data){
+}
 
 preload(){
   	//this.load.image('chambre','assets/chambre.gif');
@@ -23,7 +24,9 @@ create(){
 //  this.space = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
   this.platforms = this.physics.add.staticGroup();
   this.platforms.create(435,740,'chambre_sol');
-  this.platforms.create(780,705,'manette');
+
+  this.manette = this.physics.add.staticGroup();
+  this.manette.create(780,705,'manette');
 
 
 
@@ -32,6 +35,7 @@ create(){
   this.player.setBounce(0);
   this.player.body.setGravityY(100);
   this.physics.add.collider(this.player,this.platforms);
+  this.physics.add.collider(this.player,this.manette, takeManette, null, this);
 
 
 
@@ -52,6 +56,7 @@ this.anims.create({
 });
 
   this.cursors = this.input.keyboard.createCursorKeys();
+
 }
 
 update(){
@@ -71,6 +76,11 @@ update(){
   if (this.player.body.touching.down && !this.cursors.left.isDown && !this.cursors.right.isDown){
 		this.player.anims.play('idle', true);
 	}
+
+  function takeManette(player, manette){
+  	this.scene.start("deuxieme_scene");
+    this.player.setVelocityX(0);
+  }
 //  if (this.space.isDown) {
 //		this.scene.start("deuxieme_scene", {test: this.ciel});
 //  }
