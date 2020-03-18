@@ -10,7 +10,7 @@ physics: {
         }
     },
 
-scene: [Scene4] //Scene 1, Scene 2, Scene3
+scene: [Scene6] //Scene 1, Scene 2, Scene3, Scene4, Scene5
 
 };
 
@@ -23,6 +23,14 @@ var score_tennisman = 5;
 var scoreText_pongiste;
 var scoreText_tennisman;
 var boutonappuyé = 0;
+var pv_car = 10;
+var pv_yunah = 3;
+var carre = 1;
+var rectangle = 0;
+var batton = 0;
+var carre2 = 0;
+var rectangle2 = 0;
+var batton2 = 0;
 
 function takeManette(player, manette){
 	player.setTint(0xff0000);
@@ -95,3 +103,39 @@ function montée(montante, platforms_hori_haut){
 function takeManetteDR(player, manetteDR){
 	 this.scene.start("quatrième_scène");
 	}
+
+function hitCars(player, vroom){
+	if (vroom.body.velocity.x > 0) {
+		vroom.setFlipX(true);
+	} else {
+		vroom.anims.play('roule', true);
+		vroom.setFlipX(false);
+	}
+
+	if (this.space.isDown) {
+	pv_car = pv_car - 1;
+		if (pv_car <= 0) {
+			vroom.setVelocityY(-10000);
+			vroom.setCollideWorldBounds(false);
+		}
+	}
+
+}
+
+function takeManetteTetris(player, manetteT){
+	 this.scene.start("cinquième_scène");
+	}
+
+function jumpTetris(construction, player){
+	construction.setVelocityY(0);
+	player.setVelocityY(10);
+}
+
+function takeManetteSNES(player, manette_SNES){
+	 this.scene.start("sixième_scène");
+	}
+
+function noyade(player, mer){
+	this.scene.start("sixième_scène");
+
+}
