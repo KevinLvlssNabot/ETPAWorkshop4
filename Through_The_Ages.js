@@ -6,11 +6,11 @@ physics: {
         default: 'arcade',
         arcade: {
             gravity: { y: 600 },
-            debug: true
+            debug: false
         }
     },
 
-scene: [Scene6] //Scene 1, Scene 2, Scene3, Scene4, Scene5
+scene: [Scene1, Scene2, Scene3, Scene4, Scene5, Scene6, Scene7, Scene8, Scene9] //Scene1, Scene2, Scene3, Scene4, Scene5, Scene6, Scene7, Scene8
 
 };
 
@@ -31,6 +31,19 @@ var batton = 0;
 var carre2 = 0;
 var rectangle2 = 0;
 var batton2 = 0;
+var gameBoyOn = 0;
+var lancer = 0;
+var captureOiso = 0;
+var captureC = 0;
+var captureLic = 0;
+var pokeballsRamassées = 0;
+var murConstruit = 0;
+var murConstruit_e = 0;
+var lancer_e = 0;
+var bulletShot = 0;
+var jump = 0;
+var restart = 0;
+var alive = 0;
 
 function takeManette(player, manette){
 	player.setTint(0xff0000);
@@ -137,5 +150,124 @@ function takeManetteSNES(player, manette_SNES){
 
 function noyade(player, mer){
 	this.scene.start("sixième_scène");
+}
 
+function oops(player, pieges){
+	pieges.destroy();
+}
+
+function oneUp(player, cubes){
+	cubes.setVelocityY(100);
+	gameBoyOn = 1;
+		if (cubes.body.velocity.y == 100) {
+				cubes.setVelocityY(-100);
+		}
+	cubes.destroy();
+}
+
+
+function takeGameBoy(player, gameBoy){
+	gameBoy.destroy();
+	 this.scene.start("septième_scène");
+	}
+
+function detruit(kekeball, platforms){
+	kekeball.destroy();
+	lancer = 0;
+}
+
+function contactPoke(player, ennemis){
+	if (ennemis.body.velocity.x > 0) {
+			ennemis.setVelocityX(50);
+	} else if (ennemis.body.velocity.x < 0) {
+			ennemis.setVelocityX(-50);
+	}
+}
+
+function captureOiseau(kekeball, ennemis){
+	kekeball.destroy();
+	ennemis.destroy();
+	captureOiso = 1;
+	lancer = 0;
+}
+
+function captureCrabe(kekeball, ennemis){
+	kekeball.destroy();
+	ennemis.destroy();
+	captureC = 1;
+	lancer = 0;
+}
+
+function captureLicorne(kekeball, ennemis){
+	kekeball.destroy();
+	ennemis.destroy();
+	captureLic = 1;
+	lancer = 0;
+}
+
+function ramasse(player, kekeball){
+	kekeball.destroy();
+	pokeballsRamassées ++;
+}
+
+function takeSwitch(player, switchs){
+	 this.scene.start("huitième_scène");
+	}
+
+	function detruitMur(bullets, walls){
+		bullets.destroy();
+		walls.destroy();
+		murConstruit_e = 0;
+		lancer_e = 0;
+			if (lancer == 1) {
+					lancer =  0;
+			}
+	}
+
+	function detruit_e(kekeball, platforms){
+		kekeball.destroy();
+		lancer_e = 0;
+	}
+
+	function detruitMur_e(bullets_e, walls_e){
+		bullets_e.destroy();
+		walls_e.destroy();
+		murConstruit = 0;
+		lancer_e = 0;
+	}
+
+function dontMoveWallWBody(player, wall){
+		wall.setVelocityX(0);
+}
+
+function dontMoveWall(bullets, wall){
+	wall.setVelocityX(0);
+	bullets.destroy();
+	lancer = 0;
+}
+
+function dontMoveWall_e(bullets_e, wall_e){
+	wall_e.setVelocityX(0);
+	bullets_e.destroy();
+	lancer_e = 0;
+}
+
+function leDeces(player, bullet_e){
+	bullet_e.destroy();
+	lancer_e = 0;
+	this.scene.restart("huitième_scène");
+}
+
+function touche(yunah_e, bullets){
+	bullets.destroy();
+		pv_yunah = pv_yunah -1;
+		lancer = 0;
+		yunah_e.setVelocityX(0);
+			if (pv_yunah == 0) {
+					alive = 1;
+			}
+}
+
+function finGame(player, GGS){
+		this.scene.start("neuvième_scène");
 }
