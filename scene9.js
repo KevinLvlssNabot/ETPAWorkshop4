@@ -1,6 +1,6 @@
 class Scene9 extends Phaser.Scene {
   constructor(){
-    super("huitième_scène")
+    super("neuvième_scène")
   }
 
   init(data){
